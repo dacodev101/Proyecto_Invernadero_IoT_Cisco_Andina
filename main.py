@@ -2,7 +2,7 @@ from lectura_sensores import obtener_lecturas
 import publicacion
 from time import sleep
 
-publicacion.conectar_wifi('MASTV-VOLLBASK', 'Falcons2023')
+publicacion.conectar_wifi('name_red', 'pass_red')
 
 
 while True:
