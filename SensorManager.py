@@ -2,8 +2,28 @@ from machine import Pin, ADC, I2C, SoftI2C
 from dht import DHT22
 from bh1750 import BH1750
 
-# Definicíon de Clase por sensor
+# Definicion de la Clase para administrar sensores
 
+class SensorManager:
+    def __init__(self):
+        self.sensores = []
+
+    def registrar_sensor(self, sensor):
+        """Registrar un sensor en el sistema."""
+        self.sensores.append(sensor)
+
+    def obtener_lecturas(self):
+        """Leer datos de todos los sensores registrados."""
+        resultados = {}
+        for sensor in self.sensores:
+            try:
+                datos = sensor.leer()
+                resultados.update(datos)
+            except Exception as e:
+                resultados[sensor] = "Error: {}".format(e)
+        return resultados
+
+# Definicíon de Clase por sensor
 class DHT22Sensor:
     
     def __init__(self, pin: int):
@@ -73,7 +93,7 @@ class BH1750Sensor:
             return {'luminosidad': luminosidad}
         except OSError as e:
             print("El sensor bh1750 ubicado en los pines scl {} - sda {} tiene el siguiente error {}".format(self.pin_scl, self.pin_sda, e))
-
+            return e
 class ReleSensor:
     
     def __init__(self, pin:int):
@@ -85,6 +105,13 @@ class ReleSensor:
     
     def __repr__(self):
         return "ReleSensor(pin='{}')".format(self.pin)
+
+    def leer(self):
+        try:
+            return {'estado_rele': self._modulo_rele.value()}
+        except OSError as e:
+            print("El sensor Rele ubicado en el pin {} tiene el siguiente error {}".format(self.pin, e))
+            return e
     
     def activar_rele(self):
         try:
