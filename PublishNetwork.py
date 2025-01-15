@@ -1,6 +1,20 @@
 import network
 from umqtt.simple import MQTTClient
-from time import sleep
+
+class MqttPublisher:
+    
+    def __init__(self, broker: str, topic: str, client_id: str):
+        self.broker = broker
+        self.topic = topic
+        self.client_id = client_id
+        self.client = MQTTClient(client_id, broker)
+        
+    def __str__(self):
+        return "Conexión con Broker {} redireccionando en {}".format(self.broker, self.topic)
+        
+    def __repr__(self):
+        return "MqttPublisher(broker = {}, topic = {}, client_id = {}=".format(self.broker, self.topic, self.client_id)
+    
 
 # Configura la conexión Wi-Fi
 def conectar_wifi(name_red: str, pass_red: str):
@@ -8,7 +22,7 @@ def conectar_wifi(name_red: str, pass_red: str):
     wlan.active(True)
     wlan.connect(name_red, pass_red)  # Reemplaza con tu SSID y contraseña
     while not wlan.isconnected():
-        sleep(1)
+        pass
     print("Conexión Wi-Fi establecida:", wlan.ifconfig())
 
 # Configuración del broker MQTT

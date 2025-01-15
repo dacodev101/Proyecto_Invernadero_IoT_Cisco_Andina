@@ -1,4 +1,4 @@
-import sensores
+import SensorManager
 from time import sleep
 
 def obtener_lecturas():
