@@ -94,33 +94,3 @@ class BH1750Sensor:
         except OSError as e:
             print("El sensor bh1750 ubicado en los pines scl {} - sda {} tiene el siguiente error {}".format(self.pin_scl, self.pin_sda, e))
             return e
-class ReleSensor:
-    
-    def __init__(self, pin:int):
-        self.pin = pin
-        self._modulo_rele = Pin(pin, Pin.OUT)
-        
-    def __str__(self):
-        return "Rele ubicado en el pin {}".format(self.pin)
-    
-    def __repr__(self):
-        return "ReleSensor(pin='{}')".format(self.pin)
-
-    def leer(self):
-        try:
-            return {'estado_rele': self._modulo_rele.value()}
-        except OSError as e:
-            print("El sensor Rele ubicado en el pin {} tiene el siguiente error {}".format(self.pin, e))
-            return e
-    
-    def activar_rele(self):
-        try:
-            self._modulorele.on()
-        except OSError as e:
-            print("El Relé ubicado en el pin {} tiene el siguiente error {}".format(self.pin, e))
-
-    def desactivar_rele(self):
-        try:
-            self._modulorele.off()
-        except OSError as e:
-            print("El Relé ubicado en el pin {} tiene el siguiente error {}".format(self.pin, e))

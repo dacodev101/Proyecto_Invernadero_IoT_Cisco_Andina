@@ -51,9 +51,8 @@ class ConnectWifiCard:
             while not wlan.isconnected():
                 pass
             print("Conexión Wi-Fi establecida:", wlan.ifconfig())
-        except:
-            print("Error al publicar: {}".format(e))
-            client.disconnect()  # Desconectar después de la publicación
+        except Exception as e:
+            print("Error al conectar: {}".format(e))
         
 
 
@@ -61,10 +60,12 @@ class ConnectWifiCard:
 def publicar_datos(mqtt_publisher: MqttPublisher , data_json: dict):
     try:
         mqtt_publisher.connect()  # Conectar al broker MQTT
-        data_json = dumps(str(data_json))
+        data_json = dumps(data_json)
         mqtt_publisher.publish(data_json)  # Conectar al broker MQTT
     except Exception as e:
         print("Error al publicar {}".format(e))
+        mqtt_publisher.loop_stop()
+        mqtt_publisher.disconnect()
 
 if __name__ == "__main__":
     
@@ -79,4 +80,5 @@ if __name__ == "__main__":
     publicar_datos(mqtt, {"temperatura": 23, "humedad": 60})
 
     print(mqtt)
+
 
