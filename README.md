@@ -10,6 +10,6 @@
 - Utilizamos la libreria de uasyncio para controlar la lectura de los sensores y el control del riego automatico
 - La publicacion de los datos se realiza mediante mqtt que luego controlamos desde firebase, influxdb, nodered, grafana
 
-# Visualizacion.
+## Visualizacion.
 
 - La transformacion de los datos se hace mediante grafana, influxdb, IoT MQTT Panel en su version Android
